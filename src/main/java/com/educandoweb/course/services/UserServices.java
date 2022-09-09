@@ -1,6 +1,7 @@
 package com.educandoweb.course.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.educandoweb.course.domain.User;
 import com.educandoweb.course.repository.UserRepository;
+import com.educandoweb.course.services.exception.ObjectNotFoundException;
 
 @Service
 public class UserServices {
@@ -17,6 +19,11 @@ public class UserServices {
 	
 	public List<User> findAll() {
 		return repository.findAll();
+	}
+	
+	public User findById(String id){
+	 Optional<User> user = repository.findById(id);
+		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
 }
