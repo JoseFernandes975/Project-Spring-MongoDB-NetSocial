@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.stereotype.Service;
 
 import com.educandoweb.course.domain.User;
+import com.educandoweb.course.dto.UserDTO;
 import com.educandoweb.course.repository.UserRepository;
 import com.educandoweb.course.services.exception.ObjectNotFoundException;
 
@@ -26,4 +27,11 @@ public class UserServices {
 		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
+	public User insert(User obj) {
+		return repository.insert(obj);
+	}
+	
+	public User fromDTO(UserDTO objDto) {
+		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
+	}
 }
